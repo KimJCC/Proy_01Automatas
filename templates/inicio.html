@@ -1,0 +1,172 @@
+<!-- templates/inicio.html -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simulación MT - Resta Binaria (W1 - W2)</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">Máquina de Turing - Resta</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="/">Simulación</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('doc') }}">Info. Adicional</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container py-4">
+      <h1><b>Simulación: Resta binaria (W1 # W2)</b></h1>
+      <p>Ingrese dos números binarios separados por <code>#</code> (o por espacio). Ejemplo: <code>1011 # 0101</code></p>
+      <p><strong>Importante:</strong> al ejecutar la simulación, la máquina calculará W1 - W2, mostrando el registro de descripción y resultado en la cinta, al final de la página.</p>
+
+      <form method="POST" action="/">
+        <div class="mb-3">
+          <label for="input_string" class="form-label">Cadena (W1 # W2):</label>
+          <input type="text" class="form-control" id="input_string" name="input_string"
+                 value="{{ input_w if input_w else '101 # 011' }}" />
+        </div>
+        <button class="btn btn-primary">Ejecutar simulación</button>
+      </form>
+
+      <hr />
+
+      <h3>Séptupla del autómata (resumen)</h3>
+      <div class="card mb-3 p-3">
+        <p><strong>M</strong> = [Q, Σ, Γ, δ, q_0, q_f, B]</p>
+        <p><strong>Q</strong> = {{ septupla['Q'] }}</p>
+        <p><strong>Σ</strong> = {{ septupla['Sigma'] }}</p>
+        <p><strong>Γ</strong> = {{ septupla['Gamma'] }}</p>
+        <p><strong>Estado inicial</strong> = {{ septupla['q0'] }} &nbsp; <strong>Blanco</strong> = {{ septupla['Blanco'] }} &nbsp; <strong>Estado Final </strong> = {{ septupla['F'] }}</p>
+      </div>
+
+      <h3>Grafo del autómata (estático)</h3>
+      <div class="card mb-3 p-3">
+        <!-- SVG generado estático -->
+        <div style="overflow:auto;">
+<svg width="100%" height="160" viewBox="0 0 900 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Grafo de estados">
+  <!-- Estados como círculos -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333" />
+    </marker>
+  </defs>
+
+  <!-- q_0 -->
+  <g>
+    <circle cx="80" cy="80" r="28" fill="#fff" stroke="#333" stroke-width="2"/>
+    <text x="80" y="85" text-anchor="middle" font-size="12">q_0</text>
+  </g>
+
+  <!-- q_1 -->
+  <g>
+    <circle cx="260" cy="80" r="28" fill="#fff" stroke="#333" stroke-width="2"/>
+    <text x="260" y="85" text-anchor="middle" font-size="12">q_1</text>
+  </g>
+
+  <!-- q_2 -->
+  <g>
+    <circle cx="440" cy="80" r="28" fill="#fff" stroke="#333" stroke-width="2"/>
+    <text x="440" y="85" text-anchor="middle" font-size="12">q_2</text>
+  </g>
+
+  <!-- q_3 -->
+  <g>
+    <circle cx="620" cy="80" r="28" fill="#fff" stroke="#333" stroke-width="2"/>
+    <text x="620" y="85" text-anchor="middle" font-size="12">q_3</text>
+  </g>
+
+  <!-- q_4 -->
+  <g>
+    <circle cx="780" cy="80" r="28" fill="#fff" stroke="#333" stroke-width="2"/>
+    <text x="780" y="85" text-anchor="middle" font-size="12">q_4</text>
+  </g>
+
+  <!-- q_f (aceptación) doble círculo -->
+  <g>
+    <circle cx="900" cy="80" r="28" fill="#fff" stroke="#333" stroke-width="2" />
+    <circle cx="900" cy="80" r="22" fill="none" stroke="#333" stroke-width="2" />
+    <text x="900" y="85" text-anchor="middle" font-size="12">q_f</text>
+  </g>
+
+  <!-- Flechas -->
+  <line x1="108" y1="80" x2="232" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="170" y="70" font-size="11" text-anchor="middle">0,1 → R</text>
+
+  <line x1="288" y1="80" x2="412" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="350" y="70" font-size="11" text-anchor="middle"># → R</text>
+
+  <line x1="468" y1="80" x2="592" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="530" y="70" font-size="11" text-anchor="middle">_ → L (posicionar)</text>
+
+  <line x1="648" y1="80" x2="748" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="698" y="70" font-size="11" text-anchor="middle">normalizar</text>
+
+  <line x1="808" y1="80" x2="876" y2="80" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="842" y="70" font-size="11" text-anchor="middle">preparar salida</text>
+</svg>
+        </div>
+        <small class="text-muted">Grafo: representa las fases q_0 → q_1 → q_2 → q_3 → q_4 → q_f.</small>
+      </div>
+
+      <h3>Tabla de transiciones (δ)</h3>
+      <div class="card mb-3 p-3">
+        <div style="overflow:auto;">
+          <table class="table table-sm table-bordered">
+            <thead>
+              <tr><th>Estado</th><th>Léxico (lee)</th><th>Escribe</th><th>Mueve</th><th>Siguiente estado</th></tr>
+            </thead>
+            <tbody>
+              {% for row in delta %}
+              <tr>
+                <td>{{ row.estado }}</td>
+                <td>{{ row.lee }}</td>
+                <td>{{ row.escribe }}</td>
+                <td>{{ row.mueve }}</td>
+                <td>{{ row.siguiente }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {% if steps %}
+      <h3>Registro de Descripciones Instantáneas (ID)</h3>
+      <p>Listado final de ID (cada elemento es una instantánea del estado y cinta):</p>
+      <div class="card mb-3 p-3">
+        <table class="table table-sm">
+          <thead><tr><th>Paso</th><th>Estado</th><th>Cinta (visual)</th><th>Trimmed</th><th>Nota</th></tr></thead>
+          <tbody>
+            {% for s in steps %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ s.estado }}</td>
+              <td><pre style="white-space:pre-wrap;">{{ s.tape_visual }}</pre></td>
+              <td>{{ s.tape_trimmed }}</td>
+              <td>{{ s.nota }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <h3><strong>Resultado final en la cinta</strong></h3>
+      <p><strong>Importante:</strong> el resultado de la resta de numeros binarios se encuntra despues del <code>#</code> (lado derecho)</p>
+      <div class="card p-3 mb-4">
+        <p><strong>{{ result_tape }}</strong></p>
+      </div>
+      {% endif %}
+
+    </div>
+  </body>
+</html>
+
+

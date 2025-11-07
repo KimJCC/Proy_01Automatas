@@ -1,0 +1,32 @@
+/* static/css/main.css */
+body {
+  background: linear-gradient(to right, #c2c6db, #a4eee0);
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+.container {
+  margin-top: 18px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+pre {
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 10px;
+  overflow-x: auto;
+}
+.card {
+  border-radius: 10px;
+}
+.table pre {
+  margin: 0;
+  background: transparent;
+  padding: 0;
+}
+
+
+
